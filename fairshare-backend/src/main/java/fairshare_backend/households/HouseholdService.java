@@ -1,5 +1,6 @@
 package fairshare_backend.households;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -30,7 +31,7 @@ public class HouseholdService {
         Instant createdAt = Instant.now();
         jdbcTemplate.update(
                 "insert into public.households (id, name, owner_user_id, created_at) values (?, ?, ?, ?)",
-                id, name, ownerUserId, createdAt);
+                id, name, ownerUserId, Timestamp.from(createdAt));
         jdbcTemplate.update(
                 "insert into public.household_members (household_id, user_id) values (?, ?)",
                 id, ownerUserId);

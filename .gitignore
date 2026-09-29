@@ -1,0 +1,5 @@
+# Local IntelliJ project settings
+.idea/
+
+# macOS metadata
+.DS_Store

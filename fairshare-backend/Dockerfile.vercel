@@ -1,0 +1,17 @@
+# Build and test the executable Spring Boot application.
+FROM maven:3.9-eclipse-temurin-21 AS build
+WORKDIR /app
+
+COPY pom.xml .
+COPY src ./src
+RUN mvn -B clean verify
+
+# Keep only the Java runtime and application in the deployed image.
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+
+ENV PORT=8080
+EXPOSE 8080
+USER 10001:10001
+ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -15,8 +15,8 @@ static HTML prototypes for CSCI-4440 Software Design and Documentation.
 
 The Vue frontend currently contains the landing page. Its login and signup links
 are placeholders; frontend authentication and API integration are not yet wired
-up. The backend currently supports creating households and listing households
-for the signed-in user. Inventory and expense API endpoints are not implemented.
+up. The backend supports Supabase signup, login, token refresh, logout, and
+creating and listing households for the signed-in user. Inventory and expense API endpoints are not implemented.
 
 ## Prerequisites
 
@@ -177,3 +177,41 @@ docker run --rm -p 8080:8080 --env-file .env fairshare-backend
 
 Create an uncommitted `.env` file with the backend variables listed above and
 `PORT=8080`. Docker ignore rules exclude it from the build context.
+
+
+## Supabase authentication endpoints
+
+The backend delegates account creation, password verification, and token lifecycle
+management to Supabase Auth. It does not store passwords or create local sessions.
+The existing `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` settings configure Auth;
+no additional database migrations are needed. Never use a service-role or secret key.
+
+| Method | Endpoint | Request | Success |
+| --- | --- | --- | --- |
+| POST | `/api/auth/signup` | `{ "email": "person@example.com", "password": "a strong password" }` | `201`, user and optional tokens |
+| POST | `/api/auth/login` | Same as signup | `200`, user and tokens |
+| POST | `/api/auth/refresh` | `{ "refresh_token": "..." }` | `200`, rotated tokens |
+| GET | `/api/auth/me` | `Authorization: Bearer <access_token>` | `200`, user UUID and email |
+| POST | `/api/auth/logout` | `Authorization: Bearer <access_token>` | `204`, revokes current session's refresh tokens |
+
+Login and refresh return `user`, `access_token`, `refresh_token`, `token_type`,
+`expires_in`, and `expires_at`. The user's `id` is their Supabase UUID. Signup returns
+null token fields when email confirmation is required: show a check-your-email
+message and let the user log in after confirming. FairShare currently requires email
+confirmation. Configure Site URL and redirects in Supabase for confirmation emails.
+Supabase controls password policy and duplicate-registration behavior.
+
+Clients send access tokens in Authorization headers. They must manage token storage,
+refresh before expiry, and replace both tokens after refresh. Serialize refresh
+requests because refresh tokens rotate. Clear local tokens after logout. Existing
+access tokens may remain valid until expiry after logout. No CSRF endpoint or
+session cookie is used. `GET /api/auth/me` validates tokens using Supabase's `/user`
+endpoint; existing household endpoints retain their own Supabase identity checks.
+
+Invalid input returns `400`, authentication failure `401`, forbidden requests `403`,
+rate limits `429`, and upstream service failures `503` (malformed responses `502`).
+Responses exclude passwords and editable user metadata. The existing CORS
+configuration also applies to these endpoints. Frontend forms are still unwired.
+
+Auth tests mock Supabase REST responses; they do not create real accounts.
+See [Supabase password authentication](https://supabase.com/docs/guides/auth/passwords).

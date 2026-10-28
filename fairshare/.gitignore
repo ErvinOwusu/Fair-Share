@@ -37,3 +37,8 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Local API configuration; keep only the documented example in Git.
+.env
+.env.*
+!.env.example

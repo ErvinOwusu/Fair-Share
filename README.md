@@ -13,10 +13,12 @@ static HTML prototypes for CSCI-4440 Software Design and Documentation.
   inventory, and expense pages.
 - `docs/`: project documentation and team agreement.
 
-The Vue frontend currently contains the landing page. Its login and signup links
-are placeholders; frontend authentication and API integration are not yet wired
-up. The backend supports Supabase signup, login, token refresh, logout, and
-creating and listing households for the signed-in user. Inventory and expense API endpoints are not implemented.
+The Vue frontend includes the original landing page, account forms, and household
+list/create/details screens connected to the Java API. The backend supports
+Supabase signup, login, token refresh, logout, and creating and listing households
+for the signed-in user. Inventory, invitations and expense APIs are not implemented
+in this checkout. See [the account/household integration guide](docs/ACCOUNT-HOUSEHOLD-UI.md)
+for the file map, setup and verification limits.
 
 ## Prerequisites
 
@@ -33,6 +35,7 @@ From the repository root:
 ```sh
 cd fairshare
 npm ci
+# Copy .env.example to .env.local and set your backend address.
 npm run dev
 ```
 
@@ -51,7 +54,11 @@ locally; it is not the production hosting service.
 
 Frontend files:
 
-- `fairshare/src/App.vue`: main landing page.
+- `fairshare/src/App.vue`: navigation and account/household coordination.
+- `fairshare/src/views/LandingView.vue`: original homepage, unchanged.
+- `fairshare/src/views/AuthView.vue`: login and signup forms.
+- `fairshare/src/views/HouseholdsView.vue`: saved household list/create/details.
+- `fairshare/src/services/api.js`: Java API requests and browser session handling.
 - `fairshare/src/main.js`: Vue application entry point.
 - `fairshare/src/assets/`: styles and assets.
 - `fairshare/public/`: static files served by Vite.
@@ -135,8 +142,10 @@ Use separate Vercel projects connected to this repository.
 - Build command: `npm run build`.
 - Output directory: `dist`.
 
-Frontend API configuration still needs to be implemented when connecting the UI
-to the backend. Never include database credentials in browser code.
+Set `VITE_API_BASE_URL` to the stable HTTPS backend URL in each Vercel environment
+where the account screens should work, then rebuild/redeploy. This value is public;
+never include database credentials in browser code. An unset production value
+disables account submission with a setup message instead of using simulated data.
 
 ### Backend project
 
@@ -211,7 +220,7 @@ endpoint; existing household endpoints retain their own Supabase identity checks
 Invalid input returns `400`, authentication failure `401`, forbidden requests `403`,
 rate limits `429`, and upstream service failures `503` (malformed responses `502`).
 Responses exclude passwords and editable user metadata. The existing CORS
-configuration also applies to these endpoints. Frontend forms are still unwired.
+configuration also applies to these endpoints. Frontend forms use these routes. See the integration guide for browser setup.
 
 Auth tests mock Supabase REST responses; they do not create real accounts.
 See [Supabase password authentication](https://supabase.com/docs/guides/auth/passwords).

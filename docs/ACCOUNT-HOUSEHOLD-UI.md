@@ -24,7 +24,7 @@ The older `FairShare Local Preview` folder is still a standalone simulated proto
 | `fairshare/.gitignore` | Excludes real environment files while retaining the safe example. |
 | `fairshare/package.json` | Adds npm test and invokes Vite directly through Node to work in Windows paths containing &. No dependency upgrades. |
 | `fairshare/tests/api.test.js` | Eleven tests covering API/session behavior with supplied mock responses; they do not contact Supabase. |
-| Both READMEs and this guide | Setup, data flow, file map and verification limits. |
+| Frontend README and this guide | Setup, data flow, file map and verification limits. The root README is retained in its original form. |
 
 No Java source, database migrations, team prototypes, deployment configuration or Supabase settings were changed.
 

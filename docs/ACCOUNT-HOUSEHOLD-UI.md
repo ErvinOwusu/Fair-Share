@@ -2,7 +2,7 @@
 
 ## Branch and folders
 
-This work is on `codex/account-household-ui`. It was developed in a separate Git worktree at:
+This work is on `test/account-household-ui`. It was developed in a separate Git worktree at:
 
 `C:\Users\ervin\OneDrive\Documents\SCHOOL\SD&D\FairShare Development`
 

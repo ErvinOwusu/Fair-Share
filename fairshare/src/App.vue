@@ -1,5 +1,18 @@
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+import AuthPage from './components/AuthPage.vue'
+
+// Navigation only. These pages do not contact the backend or save account data.
+const currentPage = () => ['login', 'signup'].includes(window.location.hash.slice(1))
+  ? window.location.hash.slice(1) : 'home'
+const page = ref(currentPage())
+const updatePage = () => { page.value = currentPage() }
+onMounted(() => window.addEventListener('hashchange', updatePage))
+onUnmounted(() => window.removeEventListener('hashchange', updatePage))
+</script>
+
 <template>
-  <main class="page-shell">
+  <main v-if="page === 'home'" class="page-shell">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-shade" aria-hidden="true"></div>
 
@@ -56,6 +69,7 @@
       <span>© FairShare 2026</span>
     </footer>
   </main>
+  <AuthPage v-else :mode="page" />
 </template>
 
 <style>

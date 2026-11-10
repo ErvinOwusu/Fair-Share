@@ -12,14 +12,14 @@ For a quick walkthrough, open **Log in → View demo household** to reach the sa
 
 | Area | Where  | What |
 | --- | --- | --- |
-| Landing page and build | [App.vue](fairshare/src/App.vue), [Vite config](fairshare/vite.config.js) | Vue renders the landing page. Vite serves the HTML pages in `fairshare_site/` alongside it and includes them in the production build. |
+| Landing page and build | [App.vue](fairshare/src/App.vue), [Vite config](fairshare/vite.config.js) | Introduces FairShare and brings the site’s pages together.. Vue renders the landing page. Vite serves the HTML pages in `fairshare_site/` alongside it and includes them in the production build. |
 | Account screens | [Login](fairshare_site/login.html), [signup](fairshare_site/signup.html), [auth script](fairshare_site/auth.mjs), [auth client](fairshare_site/auth-client.mjs) | The forms call the Java API. Auth client handles the requests and stores the sign-in session in the browser. |
 | Dashboard and household pages | [Dashboard](fairshare_site/dashboard.html), [shared styles](fairshare_site/styles.css) | The dashboard links to inventory, expenses, balances, bills, shopping list, and activity. Dashboard, expenses, balances, bills, and activity currently show sample data. |
 | Inventory | [Inventory page](fairshare_site/inventory.html), [inventory script](fairshare_site/inventory.mjs), [guest storage](fairshare_site/inventory-store.mjs) | Lists items, adds items, and adjusts quantities. Signed-in users use the household inventory API. Guest inventory is saved in the browser. |
 | Shopping list | [Shopping list page](fairshare_site/shopping-list.html), [shopping list script](fairshare_site/shopping-list.mjs) | Adds items with an optional category and name of the person who added them. Additions are saved in the browser. |
-| Java API | [auth](fairshare-backend/src/main/java/fairshare_backend/auth), [households](fairshare-backend/src/main/java/fairshare_backend/households), [inventory](fairshare-backend/src/main/java/fairshare_backend/inventory) | Spring Boot controllers receive requests and delegate to services. These packages handle Supabase sign-in, household creation and lookup, invitation creation, and inventory management. |
-| Database | [Supabase migrations](supabase/migrations) | Versioned SQL defines the PostgreSQL tables for households, memberships, invitations, and inventory. |
-| Tests and team docs | [Frontend tests](fairshare/tests), [backend tests](fairshare-backend/src/test), [team agreement](docs/TEAM%20AGREEMENT.md) | The tests cover account requests, guest inventory storage, and Java API behavior. The agreement records how the team works together. |
+| Java API | [auth](fairshare-backend/src/main/java/fairshare_backend/auth), [households](fairshare-backend/src/main/java/fairshare_backend/households), [inventory](fairshare-backend/src/main/java/fairshare_backend/inventory) | Handles account access, household management, and inventory requests. |
+| Database | [Supabase migrations](supabase/migrations) | SQL defines the PostgreSQL tables for households, memberships, invitations, and inventory. |
+| Tests and team docs | [Frontend tests](fairshare/tests), [backend tests](fairshare-backend/src/test), [team agreement](docs/TEAM%20AGREEMENT.md) | Checks key behaviors and documents how the team works together. |
 
 ## Project structure
 

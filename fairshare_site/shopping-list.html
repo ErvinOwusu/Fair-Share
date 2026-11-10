@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!--
+  Shopping list page. Contains the sample items, add-item form, and row template
+  used to display new entries.
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -33,6 +37,7 @@
         <h1>Shopping List</h1>
         <p class="simple-page-intro">A few things your household needs on the next store run.</p>
         <section class="shopping-list-panel" aria-label="Shopping to-do list">
+          <!-- Screen readers can announce the updated count when an item is added. -->
           <h2>To pick up <span id="shopping-count" aria-live="polite">6 items</span></h2>
           <!-- Collects the name and optional details for a new item. -->
           <form id="shopping-add-form" class="shopping-add-form">

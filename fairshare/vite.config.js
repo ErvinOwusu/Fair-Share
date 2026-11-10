@@ -1,3 +1,8 @@
+/*
+ * Configures Vite to build the Vue landing page, serve the shared HTML pages,
+ * and forward local API requests to the Java backend.
+ */
+
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig, loadEnv } from 'vite'
@@ -10,6 +15,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 // Publish the shared HTML pages alongside the Vue landing page without duplicating sources.
 function sharedPages(apiBase) {
   const directory = fileURLToPath(new URL('../fairshare_site/', import.meta.url))
+  // Escape the backend URL before inserting it into an HTML attribute.
   const escapedBase = apiBase.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;')
   const contentTypes = { '.html': 'text/html', '.css': 'text/css', '.mjs': 'text/javascript' }
   const readPage = async (name) => {
@@ -22,8 +28,10 @@ function sharedPages(apiBase) {
   return {
     name: 'fairshare-shared-pages',
     configureServer(server) {
+      // Serve shared pages from their source folder during local development.
       server.middlewares.use(async (request, response, next) => {
         const name = new URL(request.url, 'http://localhost').pathname.slice(1)
+        // Leave index.html to Vite so it can load the Vue landing page.
         if (name === 'index.html' || name.includes('/') || !contentTypes[path.extname(name)]) return next()
         try {
           const source = await readPage(name)
@@ -33,6 +41,7 @@ function sharedPages(apiBase) {
       })
     },
     async generateBundle() {
+      // Include the same pages and assets in the production build.
       for (const name of await readdir(directory)) {
         if (name !== 'index.html' && contentTypes[path.extname(name)]) {
           this.emitFile({ type: 'asset', fileName: name, source: await readPage(name) })
@@ -51,6 +60,7 @@ export default defineConfig(({ mode }) => {
       vueDevTools(),
     ],
     server: {
+      // Forward local API requests to Spring Boot when the page uses a relative URL.
       proxy: { '/api': 'http://localhost:8080' },
     },
     resolve: {

@@ -1,5 +1,9 @@
+<!--
+  FairShare landing page. Introduces the project and links visitors to login and signup.
+-->
 <template>
   <main class="page-shell">
+    <!-- The hero introduces FairShare and provides links to the account pages. -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-shade" aria-hidden="true"></div>
 
@@ -14,6 +18,7 @@
           <p class="hero-description">Shared living is better when the little things are sorted.</p>
         </div>
 
+        <!-- Vite serves these pages from fairshare_site/. -->
         <nav class="auth-actions" aria-label="Account actions">
           <a class="btn btn-primary" href="/login.html">Log in <span aria-hidden="true">↗</span></a>
           <a class="btn btn-secondary" href="/signup.html">Sign up</a>
@@ -30,23 +35,24 @@
       </a>
     </section>
 
+    <!-- The hero's down arrow scrolls to this section. -->
     <section id="about" class="footer-info" aria-label="About FairShare">
       <article>
         <p class="section-index">01 / The idea</p>
         <h2>About us</h2>
-        <p>We are five college kids looking to create a helpful tool for people living with roommates. Our goal is to help people track shared expenses so everybody can pay their FairShare.</p>
+        <p>We are five college students looking to create a helpful tool for people living with roommates. Our goal is to help people track shared expenses so everybody can pay their FairShare.</p>
       </article>
 
       <article>
         <p class="section-index">02 / The beginning</p>
         <h2>How we got started</h2>
-        <p>This project started as an idea for CSCI-4440 Software Design and Documentation at Rensselaer Polytechnic Institute. Tasked with creating a semester-long project, we got to work!</p>
+        <p>This is a course project for CSCI-4440 Software Design and Documentation at Rensselaer Polytechnic Institute. Our goal is to give roommates one place to track shared expenses and house supplies.</p>
       </article>
 
       <article>
         <p class="section-index">03 / Say hello</p>
         <h2>Contact us</h2>
-        <p>Please don't.</p>
+        <p><a href="https://github.com/ErvinOwusu/Fair-Share/issues"><u>Report an issue on GitHub</u></a></p>
       </article>
     </section>
 
@@ -132,6 +138,7 @@ a {
   background-size: cover;
 }
 
+/* Darken the photo behind the hero text to improve contrast. */
 .hero-shade {
   position: absolute;
   z-index: -1;

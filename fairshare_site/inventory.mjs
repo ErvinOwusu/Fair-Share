@@ -1,3 +1,8 @@
+/*
+ * Loads and displays inventory, handles searches and stock changes, and saves
+ * updates through the household API or in guest storage.
+ */
+
 import { SESSION_KEY } from './auth-client.mjs'
 import { loadGuestItems, saveGuestItems } from './inventory-store.mjs'
 
@@ -36,6 +41,7 @@ function readSession() {
   return null
 }
 
+// Send inventory and household requests with the saved sign-in token.
 async function request(path, { method = 'GET', body } = {}) {
   let response
   try {
@@ -83,6 +89,7 @@ function makeElement(tag, className, text) {
   return element
 }
 
+// Rebuild the cards from the current items and search query.
 function render() {
   const query = searchInput.value.trim().toLocaleLowerCase()
   const filteredItems = items.filter((item) =>
@@ -99,6 +106,7 @@ function render() {
   }
 
   for (const item of filteredItems) {
+    // Zero is out of stock, and one to three units is low stock.
     const status = item.quantity === 0 ? 'out' : item.quantity <= 3 ? 'low' : 'stocked'
     const card = makeElement('article', 'inventory-card')
     card.dataset.status = status
@@ -144,6 +152,7 @@ function setHouseholdName(name) {
   document.querySelector('#breadcrumb-household').textContent = name
 }
 
+// Use guest storage without a session, or load the first household for a signed-in user.
 async function initialize() {
   let session
   try {
@@ -198,6 +207,7 @@ function startGuestMode(statusMessage) {
   }
 }
 
+// Handle quantity buttons here because the cards are rebuilt after each update.
 grid.addEventListener('click', async (event) => {
   const button = event.target.closest('button[data-item-id]')
   if (!button || (!household && !guestMode)) return
@@ -251,6 +261,7 @@ addButton.addEventListener('click', () => {
 
 cancelButton.addEventListener('click', () => dialog.close())
 
+// Save a new item in guest storage or send it to the household API.
 form.addEventListener('submit', async (event) => {
   event.preventDefault()
   if ((!household && !guestMode) || !form.reportValidity()) return

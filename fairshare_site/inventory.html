@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!--
+  Inventory page layout. Provides the search field, item grid, and add-item form
+  that inventory.mjs uses to display and update stock.
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -123,6 +127,7 @@
           <button class="add-inventory-button" id="add-inventory-button" type="button" aria-label="Add inventory item" disabled>+</button>
         </div>
 
+        <!-- The inventory script shows guest mode and request messages here. -->
         <p id="inventory-message" class="inventory-message" role="status" aria-live="polite"></p>
         <div class="inventory-tools">
           <label class="inventory-search">
@@ -136,6 +141,7 @@
           </div>
         </div>
 
+        <!-- The script replaces the sample cards with items from the API or guest storage. -->
         <section id="inventory-grid" class="inventory-grid" aria-label="Household inventory" hidden>
           <article class="inventory-card" data-status="low">
             <div class="item-top">
@@ -264,6 +270,7 @@
           </article>
         </section>
 
+        <!-- The plus button opens this form for a new inventory item. -->
         <dialog id="add-inventory-dialog" class="inventory-dialog">
           <form id="add-inventory-form">
             <h2>Add inventory item</h2>

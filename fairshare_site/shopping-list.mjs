@@ -1,3 +1,8 @@
+/*
+ * Handles the shopping list form, adds rows, updates the count, and saves
+ * new entries in browser storage so they reappear after a refresh.
+ */
+
 const form = document.querySelector('#shopping-add-form')
 const input = document.querySelector('#shopping-item-name')
 const list = document.querySelector('.shopping-todo-list')
@@ -30,6 +35,7 @@ function showItem({ name, category, addedBy }) {
   count.textContent = `${list.children.length} items`
 }
 
+// Append saved items below the sample items already in the HTML.
 addedItems.forEach(showItem)
 
 // Add the items and save updated list in the browser.
@@ -52,6 +58,7 @@ form.addEventListener('submit', event => {
       'Browser storage is unavailable. New items will last until you leave or refresh this page.'
   }
 
+  // Return focus to the name field so another item can be added right away.
   form.reset()
   input.focus()
 })

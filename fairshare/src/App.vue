@@ -1,5 +1,9 @@
+<!--
+  FairShare landing page. Introduces the project and links visitors to login and signup.
+-->
 <template>
   <main class="page-shell">
+    <!-- The hero introduces FairShare and provides links to the account pages. -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-shade" aria-hidden="true"></div>
 
@@ -14,6 +18,7 @@
           <p class="hero-description">Shared living is better when the little things are sorted.</p>
         </div>
 
+        <!-- Vite serves these pages from fairshare_site/. -->
         <nav class="auth-actions" aria-label="Account actions">
           <a class="btn btn-primary" href="/login.html">Log in <span aria-hidden="true">↗</span></a>
           <a class="btn btn-secondary" href="/signup.html">Sign up</a>
@@ -30,6 +35,7 @@
       </a>
     </section>
 
+    <!-- The hero's down arrow scrolls to this section. -->
     <section id="about" class="footer-info" aria-label="About FairShare">
       <article>
         <p class="section-index">01 / The idea</p>
@@ -132,6 +138,7 @@ a {
   background-size: cover;
 }
 
+/* Darken the photo behind the hero text to improve contrast. */
 .hero-shade {
   position: absolute;
   z-index: -1;

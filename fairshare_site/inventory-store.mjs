@@ -1,5 +1,11 @@
+/*
+ * Provides starter items for guest inventory and loads, validates, and saves
+ * guest changes in browser storage.
+ */
+
 export const GUEST_INVENTORY_KEY = 'fairshare.guest-inventory'
 
+// Sample items for a browser that has no saved guest inventory yet.
 export const DEFAULT_GUEST_ITEMS = [
   { id: 'guest-milk', name: 'Milk', category: 'Grocery', icon: '🥛', quantity: 2 },
   { id: 'guest-toilet-paper', name: 'Toilet Paper', category: 'Grocery', icon: '🧻', quantity: 3 },
@@ -17,6 +23,7 @@ export const DEFAULT_GUEST_ITEMS = [
   { id: 'guest-trash-bags', name: 'Trash bags', category: 'Grocery', icon: '🗑️', quantity: 0 },
 ]
 
+// Load and validate guest items. Tests can supply their own storage.
 export function loadGuestItems(storage = localStorage) {
   const saved = storage.getItem(GUEST_INVENTORY_KEY)
   if (saved === null) return DEFAULT_GUEST_ITEMS.map((item) => ({ ...item }))
@@ -37,6 +44,7 @@ export function loadGuestItems(storage = localStorage) {
   return items
 }
 
+// Save guest changes in this browser so they survive a refresh.
 export function saveGuestItems(items, storage = localStorage) {
   storage.setItem(GUEST_INVENTORY_KEY, JSON.stringify(items))
 }

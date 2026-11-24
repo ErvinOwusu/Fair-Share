@@ -519,6 +519,74 @@ body {
   line-height: 1;
   font-weight: 600;
 }
+.household-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+
+  margin-top: 22px;
+}
+
+/* Shared button styling */
+.household-dialog-actions button {
+  min-height: 50px;
+
+  padding: 0 18px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+/* Cancel */
+.close-dialog-button {
+  background-color: #ffffff;
+  color: #263238;
+
+  border: 1px solid #b7c0bd;
+}
+
+.close-dialog-button:hover {
+  background-color: #f8f7f3;
+}
+
+/* Remove Member */
+.remove-member-button {
+  background-color: #ffffff;
+  color: #d95c5c;
+
+  border: 1px solid #d95c5c;
+}
+
+.remove-member-button:hover {
+  background-color: #fff2f2;
+}
+
+/* Add Member */
+.invite-member-button {
+  background-color: #176b63;
+  color: #ffffff;
+
+  border: 1px solid #176b63;
+}
+
+.invite-member-button:hover {
+  background-color: #12574f;
+}
+
+.household-dialog-actions button:active {
+  transform: scale(0.98);
+}
 
 /* Lower panels */
 .dashboard-lower-grid {

@@ -120,7 +120,8 @@
         <!-- The balances, recent expenses, and notifications below are sample data. -->
         <section class="panel household-panel" aria-labelledby="household-heading">
           <h2 id="household-heading">Household Members</h2>
-
+          <button class="household-dialog-button" id="household-dialog-button" type="button" command="show-modal" commandfor="household-dialog" aria-label="Add member">+</button>
+          <!-- Sample member cards -->
           <div class="member-grid">
             <article class="member-card">
               <div class="member-avatar" aria-label="Member E">E</div>
@@ -140,6 +141,50 @@
               <strong>$61.00</strong>
             </article>
           </div>
+          <!-- Household Members Management Dialog-->
+          <dialog class="household-dialog" id="household-dialog">
+            <form id="household-form" method="dialog">
+              <h3>Manage Household Members</h3>
+
+              <label class="household-field">
+                <span>Member Email</span>
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="Enter member email"
+                />
+              </label>
+
+              <div class="household-dialog-actions">
+                <button
+                  class="close-dialog-button"
+                  type="button"
+                  command="close"
+                  commandfor="household-dialog"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  class="remove-member-button"
+                  type="button"
+                  aria-label="Remove member"
+                >
+                  Remove Member
+                </button>
+
+                <button
+                  class="invite-member-button"
+                  type="button"
+                  aria-label="Add member"
+                >
+                  Add Member
+                </button>
+              </div>
+            </form>
+          </dialog>
+
         </section>
 
         <div class="dashboard-lower-grid">
